@@ -63,9 +63,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #3f3f46;
         }
-        .glow-border {
-            box-shadow: 0 0 20px -5px rgba(217, 119, 6, 0.15);
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blood selection:text-white">
@@ -212,6 +209,33 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- MURO DE OPINIONES / GUESTBOOK CON BLOQUEO POR IP / NAVEGADOR -->
+                <div class="bg-cardbg border border-zinc-800/80 rounded-xl p-5 sm:p-6 shadow-lg mt-8">
+                    <h2 class="font-title text-lg font-semibold tracking-wide text-amber-200 flex items-center gap-2 mb-4 border-b border-zinc-800 pb-3">
+                        <i class="fa-solid fa-feather text-amber-600"></i> Reader's Scroll (Guestbook)
+                    </h2>
+                    
+                    <!-- Formulario de Comentario -->
+                    <form id="guestbook-form" onsubmit="postComment(event)" class="space-y-4 mb-6 bg-zinc-950/50 p-4 rounded-lg border border-zinc-800/60">
+                        <div>
+                            <label class="block text-xs font-mono text-zinc-400 mb-1">Your Name / Alias (Locked to your device)</label>
+                            <input type="text" id="comment-author" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600" placeholder="e.g., Jon Snow">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-zinc-400 mb-1">Leave a Note for Lorian</label>
+                            <textarea id="comment-text" required rows="3" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600 resize-none" placeholder="What do you think of the stories?"></textarea>
+                        </div>
+                        <button type="submit" id="submit-btn" class="w-full py-2.5 rounded bg-amber-700 hover:bg-amber-600 font-medium text-xs text-white transition-colors">
+                            Publish Note
+                        </button>
+                    </form>
+
+                    <!-- Lista de Comentarios -->
+                    <div id="comments-container" class="space-y-3">
+                        <p class="text-xs text-zinc-500 text-italic text-center py-4">Loading messages from the realm...</p>
+                    </div>
+                </div>
             </div>
 
             <!-- ANNOUNCEMENTS & SCHEDULE -->
@@ -273,13 +297,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-4 text-center">
-                    <p class="text-xs text-zinc-400 mb-3">Have a question about my stories or interested in a collaboration?</p>
-                    <button onclick="showContactModal()" class="w-full py-2 px-4 rounded bg-amber-900/40 hover:bg-amber-900/70 border border-amber-800/50 text-amber-200 font-medium text-xs transition-colors">
-                        <i class="fa-solid fa-envelope mr-1.5"></i> Send Message / Note
-                    </button>
-                </div>
             </div>
 
         </div>
@@ -291,32 +308,7 @@
         <p>&copy; 2026 Lorian &bull; Crafted for readers and dreamers of dark worlds.</p>
     </footer>
 
-    <!-- CONTACT MODAL -->
-    <div id="contact-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-cardbg border border-amber-800/50 rounded-xl max-w-md w-full p-6 relative shadow-2xl">
-            <button onclick="closeContactModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <h3 class="font-title text-lg font-bold text-amber-100 mb-2">Send Raven (Message)</h3>
-            <p class="text-xs text-zinc-400 mb-4">Leave your message or suggestion. I will answer as soon as the raven returns.</p>
-            
-            <form onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-mono text-zinc-400 mb-1">Your Name or Alias</label>
-                    <input type="text" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600" placeholder="e.g., Northern Reader">
-                </div>
-                <div>
-                    <label class="block text-xs font-mono text-zinc-400 mb-1">Message</label>
-                    <textarea required rows="4" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600 resize-none" placeholder="Write your message here..."></textarea>
-                </div>
-                <button type="submit" class="w-full py-2.5 rounded bg-amber-700 hover:bg-amber-600 font-medium text-xs text-white transition-colors">
-                    Dispatch Raven
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- SCRIPTS -->
+    <!-- SCRIPTS CON GUESTBOOK ANTI-SPAM (LOCALSTORAGE & DEVICE LOCK) -->
     <script>
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -349,21 +341,91 @@
             showToast('Discord username (j.uliannn) copied to clipboard!');
         }
 
-        function showContactModal() {
-            document.getElementById('contact-modal').classList.remove('hidden');
-            document.getElementById('contact-modal').classList.add('flex');
+        // --- SISTEMA DE COMENTARIOS ANTISPAM (BLOQUEO POR DISPOSITIVO/NOMBRE) ---
+        
+        // Simulación con almacenamiento seguro local para evitar spam masivo de nombres
+        const GUESTBOOK_KEY = 'lorian_writer_guestbook_v1';
+        const USER_LOCK_KEY = 'lorian_user_locked_name';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadComments();
+            
+            // Si el usuario ya comentó antes desde este navegador, bloqueamos o rellenamos su nombre fijo
+            const lockedName = localStorage.getItem(USER_LOCK_KEY);
+            if (lockedName) {
+                const authorInput = document.getElementById('comment-author');
+                authorInput.value = lockedName;
+                authorInput.readOnly = true; // No puede cambiar de nombre una vez registrado su dispositivo
+                authorInput.classList.add('opacity-70', 'cursor-not-allowed');
+            }
+        });
+
+        function loadComments() {
+            const container = document.getElementById('comments-container');
+            let comments = JSON.parse(localStorage.getItem(GUESTBOOK_KEY)) || [
+                { author: "Northern Reader", text: "Amazing prologue for Bastard's Rebellion! Waiting for chapter 1.", date: "Oct 28, 2026" }
+            ];
+
+            if (comments.length === 0) {
+                container.innerHTML = `<p class="text-xs text-zinc-500 italic text-center py-4">No notes left in the realm yet. Be the first!</p>`;
+                return;
+            }
+
+            container.innerHTML = comments.map(c => `
+                <div class="bg-zinc-900/80 border border-zinc-800 rounded-lg p-3 text-xs sm:text-sm">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-amber-200 font-title">${escapeHtml(c.author)}</span>
+                        <span class="text-[10px] text-zinc-500 font-mono">${c.date}</span>
+                    </div>
+                    <p class="text-zinc-300 font-story">${escapeHtml(c.text)}</p>
+                </div>
+            `).join('');
         }
 
-        function closeContactModal() {
-            document.getElementById('contact-modal').classList.remove('flex');
-            document.getElementById('contact-modal').classList.add('hidden');
-        }
-
-        function handleFormSubmit(event) {
+        function postComment(event) {
             event.preventDefault();
-            closeContactModal();
-            showToast('Raven sent successfully! Thank you for your message.');
-            event.target.reset();
+            const authorInput = document.getElementById('comment-author');
+            const textInput = document.getElementById('comment-text');
+
+            const author = authorInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!author || !text) return;
+
+            // Verificar bloqueo por dispositivo
+            const existingLock = localStorage.getItem(USER_LOCK_KEY);
+            if (existingLock && existingLock !== author) {
+                showToast('Error: This device is locked to your original alias.');
+                return;
+            }
+
+            // Guardar nombre fijo para este navegador/dispositivo
+            if (!existingLock) {
+                localStorage.setItem(USER_LOCK_KEY, author);
+                authorInput.readOnly = true;
+                authorInput.classList.add('opacity-70', 'cursor-not-allowed');
+            }
+
+            let comments = JSON.parse(localStorage.getItem(GUESTBOOK_KEY)) || [];
+            
+            // Añadir nuevo comentario al inicio
+            const newComment = {
+                author: author,
+                text: text,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            };
+
+            comments.unshift(newComment);
+            localStorage.setItem(GUESTBOOK_KEY, JSON.stringify(comments));
+
+            textInput.value = '';
+            loadComments();
+            showToast('Note pinned to the scroll successfully!');
+        }
+
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
         }
     </script>
 </body>

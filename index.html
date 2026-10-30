@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lorian | Tablero de Escritor</title>
+    <title>Lorian | Writer's Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome para iconos -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -49,7 +49,7 @@
         .font-story {
             font-family: 'EB Garamond', serif;
         }
-        /* Scrollbar personalizada */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -70,22 +70,22 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blood selection:text-white">
 
-    <!-- Notificación flotante personalizada -->
+    <!-- Floating Notification -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-zinc-900 border border-gold/40 text-amber-200 px-5 py-3 rounded-lg shadow-2xl flex items-center gap-3">
         <i class="fa-solid fa-scroll text-gold"></i>
-        <span id="toast-message" class="text-sm">Enlace copiado al portapapeles</span>
+        <span id="toast-message" class="text-sm">Link copied to clipboard</span>
     </div>
 
-    <!-- Contenedor Principal -->
+    <!-- Main Container -->
     <main class="max-w-4xl w-full mx-auto px-4 py-10 sm:py-16 flex-grow">
         
-        <!-- HEADER / PERFIL -->
+        <!-- HEADER / PROFILE -->
         <header class="text-center mb-12 relative">
             <div class="absolute -top-6 left-1/2 -translate-x-1/2 w-32 h-[1px] bg-gradient-to-r from-transparent via-amber-600/60 to-transparent"></div>
             
             <div class="inline-block p-1 rounded-full bg-gradient-to-b from-amber-600/50 via-red-900/40 to-zinc-900 mb-4 shadow-2xl">
                 <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-zinc-950 flex items-center justify-center border-2 border-amber-800/60 overflow-hidden relative group shadow-inner">
-                    <!-- Imagen de Perfil -->
+                    <!-- Profile Picture -->
                     <img src="Lord Commander Jon Snow _ Asoiaf Art.jpg" 
                          onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=400&auto=format&fit=crop&q=80';" 
                          alt="Lorian Avatar - Lord Commander Jon Snow" 
@@ -112,21 +112,21 @@
                 </p>
             </div>
 
-            <!-- Estado actual & DMs -->
+            <!-- Current Status & Share -->
             <div class="flex flex-wrap items-center justify-center gap-3 text-xs">
                 <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-800/50 text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     Open DMs / Open for Feedback
                 </span>
                 <button onclick="copyProfileLink()" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-amber-300 hover:border-amber-700/60 transition-colors">
-                    <i class="fa-solid fa-share-nodes text-xs"></i> Compartir Tablero
+                    <i class="fa-solid fa-share-nodes text-xs"></i> Share Dashboard
                 </button>
             </div>
         </header>
 
-        <!-- NAVEGACIÓN RÁPIDA / ENLACES PRINCIPALES -->
+        <!-- QUICK LINKS / SOCIALS -->
         <section class="mb-12">
-            <h2 class="font-title text-xs uppercase tracking-widest text-zinc-500 mb-4 text-center">Conexiones al Reino</h2>
+            <h2 class="font-title text-xs uppercase tracking-widest text-zinc-500 mb-4 text-center">Realm Connections</h2>
             <div class="flex justify-center gap-4 max-w-lg mx-auto">
                 <a href="https://www.wattpad.com/user/lorianeng" target="_blank" class="flex-1 flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-amber-600/50 hover:bg-zinc-900 transition-all group">
                     <i class="fa-brands fa-readme text-amber-500 group-hover:scale-110 transition-transform"></i>
@@ -139,19 +139,19 @@
             </div>
         </section>
 
-        <!-- GRID PRINCIPAL -->
+        <!-- MAIN GRID -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            <!-- PROYECTOS -->
+            <!-- PROJECTS -->
             <div class="md:col-span-2 space-y-6">
                 <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
                     <h2 class="font-title text-lg font-semibold tracking-wide text-amber-200 flex items-center gap-2">
-                        <i class="fa-solid fa-scroll text-amber-600"></i> Proyectos de Escritura
+                        <i class="fa-solid fa-scroll text-amber-600"></i> Writing Projects
                     </h2>
-                    <span class="text-xs text-zinc-500 font-mono">Actualizado: 2026</span>
+                    <span class="text-xs text-zinc-500 font-mono">Updated: 2026</span>
                 </div>
 
-                <!-- Historia 1: Bastard's Rebellion -->
+                <!-- Story 1: Bastard's Rebellion -->
                 <div class="bg-cardbg border border-amber-900/40 rounded-xl p-5 sm:p-6 hover:border-amber-600/60 transition-all relative overflow-hidden group shadow-xl">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-red-600 via-amber-600 to-red-900"></div>
                     
@@ -160,7 +160,7 @@
                             <span class="text-xs px-2 py-0.5 rounded bg-red-950/80 text-red-400 border border-red-800/50 font-mono font-semibold">ASOIAF / GOT Fanfiction (Expanded AU)</span>
                             <h3 class="font-title text-xl font-bold text-amber-100 mt-1.5 group-hover:text-amber-300 transition-colors">Bastard's Rebellion</h3>
                         </div>
-                        <a href="https://www.wattpad.com/user/lorianeng" target="_blank" class="text-xs font-mono px-2.5 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50 self-start sm:self-center hover:bg-amber-900/60 transition-colors">Ver en Wattpad</a>
+                        <a href="https://www.wattpad.com/user/lorianeng" target="_blank" class="text-xs font-mono px-2.5 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50 self-start sm:self-center hover:bg-amber-900/60 transition-colors">View on Wattpad</a>
                     </div>
 
                     <div class="font-story text-zinc-300 text-sm sm:text-base space-y-2.5 my-4 leading-relaxed bg-zinc-950/40 p-4 rounded-lg border border-zinc-800/60">
@@ -177,8 +177,8 @@
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs font-mono text-zinc-400">
-                            <span>Prólogo & Capítulos Iniciales</span>
-                            <span>Disponibles / En Emisión</span>
+                            <span>Prologue & Initial Chapters</span>
+                            <span>Available / Ongoing</span>
                         </div>
                         <div class="w-full bg-zinc-900 h-2 rounded-full overflow-hidden border border-zinc-800">
                             <div class="bg-gradient-to-r from-red-700 via-amber-600 to-amber-500 h-full rounded-full" style="width: 85%"></div>
@@ -186,25 +186,25 @@
                     </div>
                 </div>
 
-                <!-- Historia 2: La Guerra de los Tres Cuervos -->
+                <!-- Story 2: La Guerra de los Tres Cuervos -->
                 <div class="bg-cardbg border border-zinc-800/80 rounded-xl p-5 hover:border-amber-900/40 transition-all relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-700 to-zinc-900"></div>
                     
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                         <div>
-                            <span class="text-xs px-2 py-0.5 rounded bg-amber-950/60 text-amber-400 border border-amber-800/50 font-mono font-semibold">Libro Original (En planeación / borrador)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-amber-950/60 text-amber-400 border border-amber-800/50 font-mono font-semibold">Original Novel (Drafting & Planning Phase)</span>
                             <h3 class="font-title text-lg font-bold text-zinc-200 mt-1 group-hover:text-amber-200 transition-colors">La Guerra de los Tres Cuervos</h3>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-900 text-zinc-400 border border-zinc-800 self-start sm:self-center">En Desarrollo</span>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-zinc-900 text-zinc-400 border border-zinc-800 self-start sm:self-center">In Development</span>
                     </div>
 
                     <p class="font-story text-zinc-300 text-sm sm:text-base mb-4 leading-relaxed bg-zinc-950/30 p-3 rounded border border-zinc-900">
-                        Una obra original de fantasía oscura. Una crónica sangrienta de conspiraciones, secretos guardados en las sombras y destinos forjados bajo el vuelo de tres cuervos.
+                        An original dark fantasy work. A bloody chronicle of conspiracies, secrets kept in the shadows, and fates forged under the flight of three ravens.
                     </p>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs font-mono text-zinc-400">
-                            <span>Estructura de trama, Worldbuilding y Borrador</span>
+                            <span>Plot Structure, Worldbuilding & Draft</span>
                             <span class="text-amber-500">30%</span>
                         </div>
                         <div class="w-full bg-zinc-900 h-2 rounded-full overflow-hidden border border-zinc-800">
@@ -214,70 +214,70 @@
                 </div>
             </div>
 
-            <!-- ANUNCIOS Y CALENDARIO -->
+            <!-- ANNOUNCEMENTS & SCHEDULE -->
             <div class="space-y-6">
                 <div class="bg-cardbg border border-zinc-800/80 rounded-xl p-5 shadow-lg">
                     <h2 class="font-title text-sm font-semibold tracking-wider text-amber-200 flex items-center gap-2 mb-4 uppercase border-b border-zinc-800 pb-2">
-                        <i class="fa-solid fa-bullhorn text-gold"></i> Anuncios de Lorian
+                        <i class="fa-solid fa-bullhorn text-gold"></i> Lorian's Announcements
                     </h2>
                     
                     <div class="space-y-4 text-sm">
                         <div class="border-l-2 border-amber-600 pl-3 py-1">
                             <div class="flex justify-between items-center text-xs text-zinc-500 mb-1">
-                                <span class="font-mono text-amber-500">Reciente</span>
+                                <span class="font-mono text-amber-500">Recent</span>
                                 <span>Wattpad</span>
                             </div>
                             <p class="text-zinc-300 text-xs sm:text-sm">
-                                ¡<i>Bastard's Rebellion</i> ya está oficialmente publicada! Consulta el prólogo y deja tus impresiones.
+                                <i>Bastard's Rebellion</i> is officially published! Check out the prologue and leave your thoughts.
                             </p>
                         </div>
 
                         <div class="border-l-2 border-zinc-700 pl-3 py-1">
                             <div class="flex justify-between items-center text-xs text-zinc-500 mb-1">
-                                <span class="font-mono">Próximamente</span>
-                                <span>Avance</span>
+                                <span class="font-mono">Upcoming</span>
+                                <span>Preview</span>
                             </div>
                             <p class="text-zinc-300 text-xs sm:text-sm">
-                                Avanzando en los borradores de <i>La Guerra de los Tres Cuervos</i> a la par de las actualizaciones semanales.
+                                Making progress on the drafts for <i>La Guerra de los Tres Cuervos</i> alongside weekly updates.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Calendario de Lanzamientos -->
+                <!-- Upcoming Releases -->
                 <div class="bg-cardbg border border-zinc-800/80 rounded-xl p-5 shadow-lg">
                     <h2 class="font-title text-sm font-semibold tracking-wider text-amber-200 flex items-center gap-2 mb-4 uppercase border-b border-zinc-800 pb-2">
-                        <i class="fa-regular fa-calendar-days text-gold"></i> Próximos Lanzamientos
+                        <i class="fa-regular fa-calendar-days text-gold"></i> Upcoming Releases
                     </h2>
 
                     <ul class="space-y-3 text-xs sm:text-sm">
                         <li class="flex items-start gap-3">
                             <div class="bg-zinc-900 border border-red-900/50 rounded px-2 py-1 text-center font-mono text-red-400 min-w-[52px]">
-                                <span class="block text-[10px] text-zinc-500 uppercase">PRONTO</span>
-                                <span class="font-bold text-xs">CAP. 1</span>
+                                <span class="block text-[10px] text-zinc-500 uppercase">SOON</span>
+                                <span class="font-bold text-xs">CH. 1</span>
                             </div>
                             <div>
                                 <strong class="text-amber-200 block">Bastard's Rebellion</strong>
-                                <span class="text-zinc-400 text-xs">¡Estreno del Capítulo 1! Se publicará muy pronto en Wattpad.</span>
+                                <span class="text-zinc-400 text-xs">Premiere of Chapter 1! Releasing very soon on Wattpad.</span>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
                             <div class="bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-center font-mono text-amber-400 min-w-[52px]">
-                                <span class="block text-[10px] text-zinc-500 uppercase">AVANCE</span>
+                                <span class="block text-[10px] text-zinc-500 uppercase">PREVIEW</span>
                                 <span class="font-bold text-xs">EXTRA</span>
                             </div>
                             <div>
-                                <strong class="text-zinc-200 block">Ilustraciones y Lore</strong>
-                                <span class="text-zinc-400 text-xs">Publicación de detalles sobre los linajes Fuegoscuro.</span>
+                                <strong class="text-zinc-200 block">Artwork & Lore</strong>
+                                <span class="text-zinc-400 text-xs">Releasing detailed breakdowns on the <b>Blackfyre</b> lineages.</span>
                             </div>
                         </li>
                     </ul>
                 </div>
 
                 <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-4 text-center">
-                    <p class="text-xs text-zinc-400 mb-3">¿Tienes alguna pregunta sobre mis historias o propuestas de colaboración?</p>
+                    <p class="text-xs text-zinc-400 mb-3">Have a question about my stories or interested in a collaboration?</p>
                     <button onclick="showContactModal()" class="w-full py-2 px-4 rounded bg-amber-900/40 hover:bg-amber-900/70 border border-amber-800/50 text-amber-200 font-medium text-xs transition-colors">
-                        <i class="fa-solid fa-envelope mr-1.5"></i> Enviar Mensaje / Nota
+                        <i class="fa-solid fa-envelope mr-1.5"></i> Send Message / Note
                     </button>
                 </div>
             </div>
@@ -288,29 +288,29 @@
 
     <!-- FOOTER -->
     <footer class="border-t border-zinc-900 py-6 text-center text-xs text-zinc-600 font-mono">
-        <p>&copy; 2026 Lorian &bull; Creado para lectores y soñadores de mundos oscuros.</p>
+        <p>&copy; 2026 Lorian &bull; Crafted for readers and dreamers of dark worlds.</p>
     </footer>
 
-    <!-- MODAL DE CONTACTO -->
+    <!-- CONTACT MODAL -->
     <div id="contact-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-cardbg border border-amber-800/50 rounded-xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="closeContactModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <h3 class="font-title text-lg font-bold text-amber-100 mb-2">Enviar Cuervo (Mensaje)</h3>
-            <p class="text-xs text-zinc-400 mb-4">Déjame tu mensaje o sugerencia. Te responderé tan pronto como el cuervo regrese.</p>
+            <h3 class="font-title text-lg font-bold text-amber-100 mb-2">Send Raven (Message)</h3>
+            <p class="text-xs text-zinc-400 mb-4">Leave your message or suggestion. I will answer as soon as the raven returns.</p>
             
             <form onsubmit="handleFormSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-mono text-zinc-400 mb-1">Tu Nombre o Alias</label>
-                    <input type="text" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600" placeholder="Ej. Lector del Norte">
+                    <label class="block text-xs font-mono text-zinc-400 mb-1">Your Name or Alias</label>
+                    <input type="text" required class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600" placeholder="e.g., Northern Reader">
                 </div>
                 <div>
-                    <label class="block text-xs font-mono text-zinc-400 mb-1">Mensaje</label>
-                    <textarea required rows="4" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600 resize-none" placeholder="Escribe tu mensaje aquí..."></textarea>
+                    <label class="block text-xs font-mono text-zinc-400 mb-1">Message</label>
+                    <textarea required rows="4" class="w-full bg-zinc-900 border border-zinc-800 rounded px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:border-amber-600 resize-none" placeholder="Write your message here..."></textarea>
                 </div>
                 <button type="submit" class="w-full py-2.5 rounded bg-amber-700 hover:bg-amber-600 font-medium text-xs text-white transition-colors">
-                    Despachar Cuervo
+                    Dispatch Raven
                 </button>
             </form>
         </div>
@@ -336,7 +336,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            showToast('¡Enlace del tablero copiado al portapapeles!');
+            showToast('Dashboard link copied to clipboard!');
         }
 
         function copyDiscord() {
@@ -346,7 +346,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            showToast('¡Usuario de Discord (j.uliannn) copiado al portapapeles!');
+            showToast('Discord username (j.uliannn) copied to clipboard!');
         }
 
         function showContactModal() {
@@ -362,7 +362,7 @@
         function handleFormSubmit(event) {
             event.preventDefault();
             closeContactModal();
-            showToast('¡Cuervo enviado con éxito! Gracias por tu mensaje.');
+            showToast('Raven sent successfully! Thank you for your message.');
             event.target.reset();
         }
     </script>

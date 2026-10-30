@@ -127,23 +127,15 @@
         <!-- NAVEGACIÓN RÁPIDA / ENLACES PRINCIPALES -->
         <section class="mb-12">
             <h2 class="font-title text-xs uppercase tracking-widest text-zinc-500 mb-4 text-center">Conexiones al Reino</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <a href="https://wattpad.com" target="_blank" class="flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-amber-600/50 hover:bg-zinc-900 transition-all group">
+            <div class="flex justify-center gap-4 max-w-lg mx-auto">
+                <a href="https://www.wattpad.com/user/lorianeng" target="_blank" class="flex-1 flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-amber-600/50 hover:bg-zinc-900 transition-all group">
                     <i class="fa-brands fa-readme text-amber-500 group-hover:scale-110 transition-transform"></i>
                     <span class="text-sm font-medium text-zinc-200">Wattpad</span>
                 </a>
-                <a href="https://archiveofourown.org" target="_blank" class="flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-red-800/50 hover:bg-zinc-900 transition-all group">
-                    <i class="fa-solid fa-book-bookmark text-red-500 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-medium text-zinc-200">AO3</span>
-                </a>
-                <a href="https://twitter.com" target="_blank" class="flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-sky-700/50 hover:bg-zinc-900 transition-all group">
-                    <i class="fa-brands fa-x-twitter text-zinc-300 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-medium text-zinc-200">Twitter / X</span>
-                </a>
-                <a href="https://ko-fi.com" target="_blank" class="flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-amber-500/50 hover:bg-zinc-900 transition-all group">
-                    <i class="fa-solid fa-mug-hot text-amber-400 group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-medium text-zinc-200">Ko-fi / Apoyo</span>
-                </a>
+                <button onclick="copyDiscord()" class="flex-1 flex items-center justify-center gap-2.5 p-3 rounded-lg bg-cardbg border border-zinc-800 hover:border-indigo-500/50 hover:bg-zinc-900 transition-all group cursor-pointer">
+                    <i class="fa-brands fa-discord text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-medium text-zinc-200">Discord: j.uliannn</span>
+                </button>
             </div>
         </section>
 
@@ -168,7 +160,7 @@
                             <span class="text-xs px-2 py-0.5 rounded bg-red-950/80 text-red-400 border border-red-800/50 font-mono font-semibold">ASOIAF / GOT Fanfiction (Expanded AU)</span>
                             <h3 class="font-title text-xl font-bold text-amber-100 mt-1.5 group-hover:text-amber-300 transition-colors">Bastard's Rebellion</h3>
                         </div>
-                        <span class="text-xs font-mono px-2.5 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50 self-start sm:self-center">Publicado en Wattpad</span>
+                        <a href="https://www.wattpad.com/user/lorianeng" target="_blank" class="text-xs font-mono px-2.5 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/50 self-start sm:self-center hover:bg-amber-900/60 transition-colors">Ver en Wattpad</a>
                     </div>
 
                     <div class="font-story text-zinc-300 text-sm sm:text-base space-y-2.5 my-4 leading-relaxed bg-zinc-950/40 p-4 rounded-lg border border-zinc-800/60">
@@ -345,6 +337,16 @@
             document.execCommand('copy');
             document.body.removeChild(el);
             showToast('¡Enlace del tablero copiado al portapapeles!');
+        }
+
+        function copyDiscord() {
+            const el = document.createElement('textarea');
+            el.value = 'j.uliannn';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast('¡Usuario de Discord (j.uliannn) copiado al portapapeles!');
         }
 
         function showContactModal() {
